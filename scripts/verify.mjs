@@ -669,6 +669,32 @@ async function fixtureChecks(browser) {
   );
   await step(
     'Chromium (simulated providers)',
+    'connected header fits at 320, 390, and 1440px after wallet dialog focus restoration',
+    async () => {
+      for (const width of [320, 390, 1440]) {
+        await page.setViewportSize({ width, height: 844 });
+        const wallet = page.locator('.wallet-button');
+        await wallet.click();
+        await page.getByRole('dialog', { name: 'Your wallet' }).waitFor();
+        assert.equal(
+          (await page.locator('.account-address code').textContent()).toLowerCase(),
+          fixtureAddress.toLowerCase(),
+        );
+        await noOverflow(page);
+        await page.keyboard.press('Escape');
+        assert.ok(await wallet.evaluate((el) => el === document.activeElement));
+        await noOverflow(page);
+        assert.equal(await page.evaluate(() => scrollX), 0);
+        const box = await wallet.boundingBox();
+        assert.ok(box && box.x >= 0 && box.x + box.width <= width);
+        if (width === 320)
+          await page.screenshot({ path: `${shots}/wallet-header-320.png` });
+      }
+      await page.setViewportSize({ width: 390, height: 844 });
+    },
+  );
+  await step(
+    'Chromium (simulated providers)',
     'connection survives reload, wallet address labels only a new local run, full address is reachable, disconnect works',
     async () => {
       await settle(page);
@@ -700,6 +726,126 @@ async function fixtureChecks(browser) {
       await page
         .getByRole('button', { name: 'Connect wallet', exact: true })
         .waitFor();
+    },
+  );
+  await context.close();
+}
+
+async function hudChecks(browser) {
+  const { context, page } = await pageFor(browser, {
+    viewport: { width: 1440, height: 900 },
+  });
+  await step(
+    'Chromium',
+    'pointer HUD pause returns game focus and P/Escape resume; sound keeps Up/Space jumping',
+    async () => {
+      for (const key of ['p', 'Escape']) {
+        await settle(page);
+        await page.getByRole('button', { name: 'Start running' }).click();
+        await page.getByRole('button', { name: 'Pause run', exact: true }).click();
+        await status(page, 'paused');
+        assert.ok(await page.locator('canvas').evaluate((el) => el === document.activeElement));
+        await page.keyboard.press(key);
+        await status(page, 'running');
+        await page.keyboard.press(key);
+        await status(page, 'paused');
+      }
+      await settle(page);
+      await page.getByRole('button', { name: 'Start running' }).click();
+      await page.getByRole('button', { name: 'Turn sound on' }).click();
+      assert.ok(await page.locator('canvas').evaluate((el) => el === document.activeElement));
+      for (const key of ['ArrowUp', 'Space']) {
+        await page.keyboard.press(key);
+        await page.waitForFunction(() => document.querySelector('.game-frame')?.getAttribute('data-jumping') === 'true');
+        assert.ok(await page.getByRole('button', { name: 'Turn sound off' }).isVisible());
+        await page.waitForFunction(() => document.querySelector('.game-frame')?.getAttribute('data-jumping') === 'false');
+      }
+      await page.keyboard.press('p');
+      await status(page, 'paused');
+    },
+  );
+  await step(
+    'Chromium',
+    'keyboard HUD activation stays native, P/Escape work on HUD buttons, editable fields keep input',
+    async () => {
+      await settle(page);
+      await page.getByRole('button', { name: 'Start running' }).click();
+      const pause = page.locator('.game-utilities button').nth(1);
+      await pause.focus();
+      await page.keyboard.press('Space');
+      await status(page, 'paused');
+      assert.ok(await pause.evaluate((el) => el === document.activeElement));
+      await page.keyboard.press('p');
+      await status(page, 'running');
+      await pause.focus();
+      await page.keyboard.press('Escape');
+      await status(page, 'paused');
+      await page.keyboard.press('Escape');
+      await status(page, 'running');
+      const sound = page.locator('.game-utilities button').first();
+      await sound.focus();
+      await page.keyboard.press('Space');
+      assert.ok(await page.getByRole('button', { name: 'Turn sound on' }).isVisible());
+      assert.ok(await sound.evaluate((el) => el === document.activeElement));
+      assert.equal(await page.locator('.game-frame').getAttribute('data-jumping'), 'false');
+      await page.keyboard.press('p');
+      await status(page, 'paused');
+      await page.evaluate(() => {
+        const input = document.createElement('input');
+        input.id = 'validation-input';
+        input.setAttribute('aria-label', 'Validation input');
+        document.body.append(input);
+        input.focus();
+      });
+      for (const key of ['p', 'Escape', 'Space', 'ArrowUp'])
+        await page.keyboard.press(key);
+      await status(page, 'paused');
+      await page.locator('#validation-input').evaluate((el) => el.remove());
+    },
+  );
+  await context.close();
+}
+
+async function playerDialogChecks(browser, name = 'Chromium') {
+  const { context, page } = await pageFor(browser, {
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+  });
+  const fixtureAddress = `0x${randomBytes(20).toString('hex')}`;
+  await step(
+    name,
+    'local player dialog pauses an active run, freezes score, restores focus, and requires explicit resume',
+    async () => {
+      await settle(page);
+      await page.evaluate((address) => {
+        localStorage.setItem('squeek-runner:v1', JSON.stringify({
+          version: 1,
+          best: 100,
+          runs: [{ id: 'validation-local-run', at: '2026-11-04T00:00:00.000Z', score: 100, cheese: 1, seconds: 5, distance: 900, address }],
+          sound: false,
+        }));
+      }, fixtureAddress);
+      await settle(page);
+      await page.getByRole('button', { name: 'Start running' }).tap();
+      const player = page.getByRole('button', { name: `View player address ${fixtureAddress}` });
+      await player.tap();
+      await page.getByRole('dialog', { name: 'Player address' }).waitFor();
+      await status(page, 'paused');
+      const frozen = await score(page);
+      await page.keyboard.press('p');
+      await page.waitForTimeout(1000);
+      await status(page, 'paused');
+      assert.equal(await score(page), frozen);
+      assert.equal(await page.locator('.full-address').textContent().then((text) => text.toLowerCase()), fixtureAddress.toLowerCase());
+      await axe(page);
+      if (name === 'Chromium')
+        await page.screenshot({ path: `${shots}/player-dialog-paused.png` });
+      await page.keyboard.press('Escape');
+      await status(page, 'paused');
+      assert.ok(await player.evaluate((el) => el === document.activeElement));
+      await page.getByRole('button', { name: 'Resume running' }).tap();
+      await status(page, 'running');
     },
   );
   await context.close();
@@ -741,6 +887,8 @@ try {
   await coreFlows(chromiumBrowser, 'Chromium');
   await desktopChecks(chromiumBrowser);
   await fixtureChecks(chromiumBrowser);
+  await hudChecks(chromiumBrowser);
+  await playerDialogChecks(chromiumBrowser);
   await blockedStorage(chromiumBrowser);
   try {
     webkitBrowser = await webkit.launch({ headless: true });
@@ -754,7 +902,10 @@ try {
     console.log('NOT PERFORMED WebKit: browser runtime unavailable.');
     if (process.argv.includes('--require-webkit')) throw error;
   }
-  if (webkitBrowser) await coreFlows(webkitBrowser, 'WebKit');
+  if (webkitBrowser) {
+    await coreFlows(webkitBrowser, 'WebKit');
+    await playerDialogChecks(webkitBrowser, 'WebKit');
+  }
   assert.deepEqual(errors, [], 'browser console / page errors');
   assert.deepEqual(failedResources, [], 'missing production resources');
   console.log(

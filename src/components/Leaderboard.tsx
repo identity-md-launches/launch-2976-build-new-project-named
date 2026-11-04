@@ -9,9 +9,11 @@ import { CHAIN_ID } from '../wallet/config';
 export function Leaderboard({
   runs,
   onStart,
+  onOpen,
 }: {
   runs: LocalRun[];
   onStart: () => void;
+  onOpen: () => void;
 }) {
   const [tab, setTab] = useState<'local' | 'sepolia'>('local');
   const [player, setPlayer] = useState<string | null>(null);
@@ -116,6 +118,7 @@ export function Leaderboard({
                         className="address-button"
                         aria-label={`View player address ${run.address}`}
                         onClick={() => {
+                          onOpen();
                           setPlayer(run.address);
                           setCopyNote('');
                         }}

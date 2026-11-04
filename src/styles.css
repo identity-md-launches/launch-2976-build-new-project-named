@@ -1237,10 +1237,14 @@ kbd {
 }
 
 @media (max-width: 23rem) {
+  .site-header {
+    flex-wrap: wrap;
+  }
   .wallet-word {
     display: none;
   }
   .wallet-button {
+    margin-inline-start: auto;
     padding-inline: 10px;
   }
   .wallet-button.wrong-chain {

@@ -1,90 +1,114 @@
 {
-  "checkedAt": "2026-11-04T17:22:10.803Z",
+  "checkedAt": "2026-11-04T17:46:02.648Z",
   "target": "dist/ served at /preview/",
   "results": [
     {
       "browser": "Chromium",
       "name": "390px first screen, complete metadata, relative assets, and accessible ready state",
       "passed": true,
-      "durationMs": 1435
+      "durationMs": 1593
     },
     {
       "browser": "Chromium",
       "name": "keyboard start and jump, no page scroll, pause freezes score, resume and restart",
       "passed": true,
-      "durationMs": 784
+      "durationMs": 837
     },
     {
       "browser": "Chromium",
       "name": "collision, game over, collected cheese, local leaderboard, persistence, and sound toggle",
       "passed": true,
-      "durationMs": 3764
+      "durationMs": 3990
     },
     {
       "browser": "Chromium",
       "name": "touch scene and visible Jump control both jump",
       "passed": true,
-      "durationMs": 1131
+      "durationMs": 1205
     },
     {
       "browser": "Chromium",
       "name": "help dialog pauses gameplay, traps keyboard focus, Escape closes and restores focus",
       "passed": true,
-      "durationMs": 751
+      "durationMs": 849
     },
     {
       "browser": "Chromium",
       "name": "leaderboard tabs reveal honest Sepolia state and support arrow keys",
       "passed": true,
-      "durationMs": 67
+      "durationMs": 72
     },
     {
       "browser": "Chromium",
       "name": "phone wallet sheet contains all four branded open-in paths and closes accessibly",
       "passed": true,
-      "durationMs": 846
+      "durationMs": 926
     },
     {
       "browser": "Chromium",
       "name": "320, 740, and 1440px reflow; reduced motion has no endless decorative animation",
       "passed": true,
-      "durationMs": 258
+      "durationMs": 410
     },
     {
       "browser": "Chromium",
       "name": "desktop ready layout and no-extension recovery",
       "passed": true,
-      "durationMs": 468
+      "durationMs": 594
     },
     {
       "browser": "Chromium",
       "name": "keyboard focus is visible and 200% text enlargement remains usable",
       "passed": true,
-      "durationMs": 165
+      "durationMs": 228
     },
     {
       "browser": "Chromium (simulated providers)",
       "name": "EIP-6963 lists MetaMask and Rabby separately; pending and rejected connection states recover",
       "passed": true,
-      "durationMs": 388
+      "durationMs": 581
     },
     {
       "browser": "Chromium (simulated providers)",
       "name": "wrong-network detection; Sepolia switch and unknown-chain add fallback use the correct chain",
       "passed": true,
-      "durationMs": 949
+      "durationMs": 1023
+    },
+    {
+      "browser": "Chromium (simulated providers)",
+      "name": "connected header fits at 320, 390, and 1440px after wallet dialog focus restoration",
+      "passed": true,
+      "durationMs": 460
     },
     {
       "browser": "Chromium (simulated providers)",
       "name": "connection survives reload, wallet address labels only a new local run, full address is reachable, disconnect works",
       "passed": true,
-      "durationMs": 3019
+      "durationMs": 3143
+    },
+    {
+      "browser": "Chromium",
+      "name": "pointer HUD pause returns game focus and P/Escape resume; sound keeps Up/Space jumping",
+      "passed": true,
+      "durationMs": 2700
+    },
+    {
+      "browser": "Chromium",
+      "name": "keyboard HUD activation stays native, P/Escape work on HUD buttons, editable fields keep input",
+      "passed": true,
+      "durationMs": 463
+    },
+    {
+      "browser": "Chromium",
+      "name": "local player dialog pauses an active run, freezes score, restores focus, and requires explicit resume",
+      "passed": true,
+      "durationMs": 2632
     },
     {
       "browser": "Chromium",
       "name": "blocked browser storage still allows gameplay and gives an honest save limitation",
       "passed": true,
-      "durationMs": 3011
+      "durationMs": 3073
     }
   ],
   "unperformed": [

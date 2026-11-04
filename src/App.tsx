@@ -122,7 +122,11 @@ export default function App() {
                 </li>
               </ol>
             </section>
-            <Leaderboard runs={save.runs} onStart={startFromBoard} />
+            <Leaderboard
+              runs={save.runs}
+              onStart={startFromBoard}
+              onOpen={() => game.current?.pause()}
+            />
           </div>
         </main>
         <footer className="site-footer">

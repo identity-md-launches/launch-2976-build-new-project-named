@@ -1,0 +1,113 @@
+{
+  "scope": "Three reported defects reproduced on the accepted dist export, then rechecked on the revised production export. Wallets and saved runs are browser fixtures only.",
+  "before": {
+    "header": {
+      "viewport": 320,
+      "scrollWidth": 344,
+      "button": {
+        "x": 180.609375,
+        "right": 333.609375,
+        "width": 153
+      },
+      "scrollX": 10,
+      "focused": "wallet-button "
+    },
+    "pauseP": {
+      "status": "paused",
+      "focused": "Resume run"
+    },
+    "pauseEscape": {
+      "status": "paused",
+      "focused": "Resume run"
+    },
+    "soundUp": {
+      "jumping": "false",
+      "focused": "Turn sound off"
+    },
+    "soundSpace": {
+      "jumping": "false",
+      "focused": "Turn sound on",
+      "soundAction": "Turn sound on"
+    },
+    "playerDialog": {
+      "start": {
+        "status": "running",
+        "score": "0000"
+      },
+      "later": {
+        "status": "running",
+        "score": "0019"
+      },
+      "dialogOpen": true
+    },
+    "errors": [],
+    "failedResources": []
+  },
+  "after": {
+    "header": {
+      "viewport": 320,
+      "scrollWidth": 305,
+      "button": {
+        "x": 136,
+        "right": 289,
+        "width": 153
+      },
+      "scrollX": 0,
+      "focused": "wallet-button "
+    },
+    "pauseP": {
+      "status": "running",
+      "focused": "Pantry scene. Squeek the mouse is running."
+    },
+    "pauseEscape": {
+      "status": "paused",
+      "focused": "Pantry scene. Squeek the mouse is waiting on the shelf."
+    },
+    "soundUp": {
+      "jumping": "true",
+      "focused": "Pantry scene. Squeek the mouse is running."
+    },
+    "soundSpace": {
+      "jumping": "true",
+      "focused": "Pantry scene. Squeek the mouse is running.",
+      "soundAction": "Turn sound off"
+    },
+    "playerDialog": {
+      "start": {
+        "status": "paused",
+        "score": "0001"
+      },
+      "later": {
+        "status": "paused",
+        "score": "0001"
+      },
+      "dialogOpen": true
+    },
+    "errors": [],
+    "failedResources": []
+  },
+  "afterNotes": {
+    "header": "At 320px innerWidth, scrollWidth is 305px (the stable scrollbar gutter leaves clientWidth 305px); scrollX is zero and the full 153px button ends at 289px.",
+    "pauseEscape": "The measurement script presses P and then Escape consecutively: P resumes and Escape pauses again. The production regression separately starts fresh for each key and verifies both resume after a pointer pause.",
+    "soundSpace": "The compact reproduction sends Up and Space consecutively; the production regression waits for landing between them and verifies two distinct jumps without toggling sound."
+  },
+  "productionRegressionResults": "See browser-validation.json: 18/18 Chromium checks pass, including connected-header reflow at 320/390/1440, HUD pointer/keyboard paths, editable-field exclusion, and the player modal pause/freeze/close/explicit-resume flow.",
+  "limitations": "Simulated EIP-6963/EIP-1193 wallets only. WebKit cannot launch due missing system libraries. No real approvals, signatures, transactions, phone handoff, physical devices, screen-reader or audible-quality session.",
+  "responses": [
+    {
+      "finding": "c35ca788b2b4e0b295c695646d1ed2358f0e8b6c0a0ecdc9f1863fa317272eef",
+      "verdict": "fixed",
+      "detail": "Reproduced on the unchanged production export at 320x844 with the reported Rabby fixture address: scrollWidth 344px, wallet right edge 333.609375px, scrollX 10 after Escape/focus restoration. In the existing max-width:23rem rule, .site-header now flex-wraps and .wallet-button uses margin-inline-start:auto. Rebuilt dist and reran the same flow: scrollWidth/clientWidth 305px within innerWidth 320px, button right edge 289px, scrollX 0. The full-address dialog remains intact; no overflow hiding was added. Production regression passes at 320/390/1440; artifacts/screenshots/wallet-header-320.png and artifacts/revision-validation.json record the evidence."
+    },
+    {
+      "finding": "fb079ace655eef0359c119323e0b6e9a6200047442df0f8547f2fbc1d845da11",
+      "verdict": "fixed",
+      "detail": "Reproduced in Chromium at 1440x900: clicking Pause left Resume run focused so P/Escape did not resume; clicking sound left Up/Space without a jump and Space toggled sound. Game.tsx now returns canvas focus without scrolling after pointer activation of HUD sound/pause (click detail > 0), and allows P/Escape on HUD controls. Native keyboard Space activation and editable-field/dialog exclusions remain. Production regressions verify fresh P and Escape resumes, separate Up and Space jumps after landing with sound unchanged, native keyboard button activation, HUD-focused pause shortcuts, and editable-field exclusion. All pass."
+    },
+    {
+      "finding": "f156cfdb4c8f1e9ca5172f5412381d3079c25572ca3829182fc2aaa8ec552fb7",
+      "verdict": "fixed",
+      "detail": "Reproduced on the unchanged export at 390x844 with the reported local-run fixture: Player address stayed open while status remained running and score rose from 0000 to 0019 in one second. App now passes Leaderboard an onOpen callback calling game.current?.pause(); the address handler invokes it immediately before setPlayer. Production regression confirms paused status and frozen score for one second with the modal open, game shortcuts ignored in the modal, full address available, Escape returning focus to the address button without resuming, and explicit Resume running returning to play. Screenshot: artifacts/screenshots/player-dialog-paused.png. No wallet approval or blockchain transaction is involved."
+    }
+  ]
+}

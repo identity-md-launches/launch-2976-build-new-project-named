@@ -1,6 +1,6 @@
 # Squeek Runner validation and design review
 
-Reviewed 2026-11-04. These are checks performed by the implementation worker, not independent certification. The authoritative product deliverable is the source plus the complete `dist/` export.
+Reviewed and revised 2026-11-04. These are checks performed by the implementation worker, not independent certification. The authoritative product deliverable is the source plus the complete `dist/` export. The revision preserves the accepted game and wallet architecture and addresses only the three reproduced reports, their regression coverage, and delivery documentation/evidence.
 
 ## Result
 
@@ -9,16 +9,88 @@ Reviewed 2026-11-04. These are checks performed by the implementation worker, no
 | Production build | Passed, exit 0, Vite 8.3.5 |
 | TypeScript | Passed, exit 0, `tsc --noEmit` |
 | Simulation/storage | 13/13 tests passed, exit 0 |
-| Production Chromium interactions | 14/14 checks passed, exit 0 |
+| Production Chromium interactions | 18/18 checks passed, exit 0, including four added regression checks |
 | Browser errors / failed local resources | 0 / 0 in the production interaction run |
-| Automated accessibility | No axe WCAG A/AA violations in checked ready, game-over, help, phone-wallet, and connected-wallet states |
+| Automated accessibility | No axe WCAG A/AA violations in checked ready, game-over, help, phone-wallet, connected-wallet, and player-address states |
 | Pinned taste@1 | 16/16 checks passed, exit 0 |
 | Extra ready-state canvas/text contrast | 38/38 cases passed across four widths; lowest ratio 4.82:1 |
-| Submission file/byte check | Passed: 65 Git-visible files, approximately 1.40 MiB including documentation and screenshots; below 8 MiB |
+| Submission file/byte check | Revised export: 599,029 bytes. Current-file audit passed below 1.6 MiB total and 8 MiB limit. Original helper stops on deleted old hashed assets until deletions are staged; scratch audit filters those obsolete index entries. |
 | First screen at 390 × 844 | Product, real scene, and Start running visible together |
 | WebKit | Attempted; runtime unavailable due missing system libraries |
 | Managed browser tool | Attempted; its configured Chrome executable was unavailable. Used installed Playwright Chromium and inspected its actual screenshots. |
 | IPFS URL | After review: network publishing uses the supplied relative-URL `dist/`; no URL or CID invented |
+
+## Revision findings and rechecks
+
+All three reports reproduced on the unchanged accepted export using Chromium. The compact reproduction reused the existing verification server, provider fixture, and reported address/local record. Before/after measurements are retained in `artifacts/revision-validation.json`; the formal response for each finding is `.imd-responses.json`.
+
+### HIGH · Connected wallet overflow at 320px — fixed
+
+**Source:** `src/styles.css:1239`, existing `max-width: 23rem` rule.
+
+**Before:** At 320 × 844, simulated Rabby connected to Sepolia, Escape closed the wallet dialog and restored focus. The root scroll width was **344px**, the 153px wallet button ended at **333.609375px**, and focus restoration scrolled horizontally to **10px**. The baseline screenshot visibly cut off the address control.
+
+**Fix:** Allow `.site-header` to wrap and give `.wallet-button` `margin-inline-start: auto` within the existing breakpoint. No overflow clipping or full-address dialog changes.
+
+**Recheck:** The identical fixture now has **305px scrollWidth/clientWidth** within a 320px viewport (the existing stable scrollbar gutter accounts for the difference), button right edge **289px**, and **scrollX 0**. Production regression also opens/closes the full-address wallet sheet and checks focus return, button bounds, and no overflow at **320/390/1440px**. `screenshots/wallet-header-320.png` was visually inspected: the full connected label and focus ring fit on the second row. The 390px first screen still shows the game and Start running.
+
+### MEDIUM · HUD focus blocked gameplay shortcuts — fixed
+
+**Source:** `src/components/Game.tsx:158`, `src/components/Game.tsx:254`, and `src/components/Game.tsx:276`.
+
+**Before:** At 1440 × 900, clicking HUD Pause retained focus on Resume run; P and Escape left the run paused. Clicking sound retained button focus; Up did not jump and Space toggled sound instead of jumping.
+
+**Fix:** Pointer clicks on sound/pause restore canvas focus with `preventScroll`; keyboard-generated clicks keep native button handling. P/Escape are accepted on HUD buttons while open dialogs, editable fields, and other interactive controls retain their exclusions.
+
+**Recheck:** Two production checks independently verify P and Escape resume after a pointer pause, separate Up/Space jumps with landing between them and sound unchanged, native Space button activation, pause shortcuts on keyboard-focused HUD buttons, and editable-field input without gameplay changes. Both pass.
+
+### MEDIUM · Player-address modal left the run active — fixed
+
+**Source:** `src/App.tsx:125` and `src/components/Leaderboard.tsx:120`.
+
+**Before:** At 390 × 844 with touch, the supplied local record's address opened a native modal, but status stayed running and score rose from **0000 to 0019** in one second while controls were blocked.
+
+**Fix:** Pass an `onOpen` callback from App to Leaderboard that calls `game.current?.pause()`; invoke it immediately before `setPlayer`. Closing keeps resuming explicit, matching the other dialogs.
+
+**Recheck:** The seeded local-player flow pauses immediately, freezes the score for one second, ignores P inside the modal, exposes the full address, and returns focus on Escape while staying paused. Resume running then restarts simulation. Axe reports no violations in this modal. `screenshots/player-dialog-paused.png` was inspected. The fixture is test-only browser data; no account approval or blockchain transaction is involved.
+
+## Revision execution record
+
+No dependency manifest/lockfile or ignore-rule change was needed. Dependencies, browser downloads, local browser libraries, and a mirror of source/configuration were kept entirely in disposable `test/scratch/` to honor the repository's dependency-path restriction. The mirror's source/configuration matched the delivered files; its complete production output replaced root `dist/`. Browser scripts were copied beside those temporary dependencies and run from the repository root against root `dist/`.
+
+Commands actually run in this revision:
+
+```sh
+npm ci --prefix test/scratch/deps --cache test/scratch/npm-cache --ignore-scripts --no-audit --no-fund
+npm run build --prefix test/scratch/deps
+npm run typecheck --prefix test/scratch/deps
+npm test --prefix test/scratch/deps
+node test/scratch/deps/scripts/reproduce.mjs
+node test/scratch/deps/scripts/verify.mjs
+node test/scratch/deps/scripts/visual-audit.mjs
+node .imd/reads/skills/design-critic/scripts/taste.mjs --out test/scratch/taste
+node scripts/bundle-budget.mjs
+node test/scratch/bundle-budget.mjs
+```
+
+Install, build, typecheck, tests, final browser run, contrast audit, probe, and current-file byte audit all exited **0**. The build retains the pre-existing nonfatal unused-Tempo-path `node:worker_threads` warning. The final browser run passed **18/18**, with **zero console/page errors and missing local resources**; WebKit launch was attempted and reported unavailable libraries. The managed browser also could not start its configured Chrome. Downloaded Chromium ran after scratch-only library/font setup; browser commands used `PLAYWRIGHT_BROWSERS_PATH`, `LD_LIBRARY_PATH`, and `FONTCONFIG_FILE`; the probe also used `IMD_PLAYWRIGHT`. No validation-only runtime paths enter the product.
+
+Earlier attempts are not reported as passes: initial browser launches failed for unavailable binaries/libraries; an attempted `apt-get download` found no local package index, so the Chromium libraries were fetched/extracted in scratch from Debian's public package index. The first added modal test mistakenly pressed Space on the focused native Close button, closing the modal and causing a locator timeout (exit 1); it was corrected to test the unbound P shortcut while preserving native button activation. A retry was terminated (exit 143); the final complete run passed. The original budget helper exited **1** because its cached Git path list includes the old replaced JavaScript asset; an unchanged copy in scratch with missing/deleted index entries filtered out passed all original remaining assertions. No Git metadata or ignore rule was changed.
+
+The final export manifest was regenerated with SHA-256 hashes. Old hashed assets were removed, and fonts, share image, licenses, and wallet assets remain complete. Both the 390px first screen and the desktop screenshot were viewed, as were the connected narrow header and paused player modal.
+
+### Six-domain revision coverage
+
+| Domain | Checked in this revision | Limits |
+| --- | --- | --- |
+| Accessibility | HUD pointer focus return, native keyboard button activation, P/Escape, editable-field/dialog exclusions, modal focus return, axe scans including player address | No screen-reader, physical-device, or full forced-colors session |
+| Layout | Responsive header correction, connected focus restoration at 320/390/1440, ordinary reflow at 320/390/740/1440, first-screen game/action at 390, desktop and modal screenshots | No native browser zoom or full RTL/localization audit; existing 200% text-enlargement check passes |
+| Writing | Existing action labels still match corrected behavior; local/browser score and future Sepolia disclosures remain accurate | No copy or terminology redesign needed |
+| Typography | Existing six-size/three-weight scale, local DM Sans loaded, short wallet control and full wrapped addresses | No font changes or cross-OS font-rendering session |
+| Colors | Existing tokens preserved; probe contrast passes, extra ready-canvas audit 38/38 with minimum 4.82:1 | Ready-state pixel sampling does not certify every animated frame |
+| UI | Ready/running/paused/over states, HUD pointer/keyboard controls, wallet/player dialogs, reduced-motion check, visible focus in screenshots | WebKit/Safari and real wallet/provider flows remain unverified; no slow-motion Animations-panel review |
+
+**Complete for the revision scope.** All three reported defects were reproduced and corrected. Existing limitations concerning real wallets, WebKit/Safari, physical devices, screen readers, audio quality, and post-handoff IPFS publication remain; no blockchain integration or live deployment is claimed.
 
 ## Scope and assumptions
 
@@ -66,7 +138,7 @@ There are no known missing or faked implementation requirements. Publishing is a
 
 ## Findings, fixes, and rechecks
 
-All paths below point to final source, where the correction is visible. No high/medium finding remains open.
+The findings below retain the original implementation record and its source locations; current revision locations and rechecks appear above. No high/medium finding remains open.
 
 ### HIGH · Optional wallet storage blocked the whole game
 
@@ -156,7 +228,8 @@ Initial development failures were corrected: a wrong Fontsource subset import wa
 
 ## Evidence
 
-- `browser-validation.json`: all 14 final Chromium check results, no console/page errors or missing local resources, explicit unavailable WebKit coverage, timestamps.
+- `browser-validation.json`: all 18 final Chromium check results, no console/page errors or missing local resources, explicit unavailable WebKit coverage, timestamps.
+- `revision-validation.json` and root `.imd-responses.json`: reproduced before/after measurements, scope, limitations, and an answer for each reported defect.
 - `design-probe.json`: the pinned probe's 16 actual final checks, including its canvas-contrast limitation and zero undersized comfortable targets.
 - `contrast-validation.json`: actual pixel/foreground pairs for the 38 ready-state measurements at 320/390/740/1440px.
 - `export-manifest.json`: final static export file sizes and SHA-256 hashes.
@@ -166,6 +239,8 @@ Initial development failures were corrected: a wrong Fontsource subset import wa
 - `screenshots/mobile-wallet.png`: actual 390px branded open-in sheet and paused game behind it.
 - `screenshots/desktop-focus.png`: visible keyboard ring on the header action.
 - `screenshots/wallet-connected.png`: connected-account sheet from a **simulated provider**, not a real account or blockchain transaction.
+- `screenshots/wallet-header-320.png`: connected header after Escape/focus restoration, with the wallet on its own row and no overflow.
+- `screenshots/player-dialog-paused.png`: locally saved player address open with the active game paused behind it.
 
 These screenshots were generated by the bounded production test server and visually inspected by the worker. The pinned probe's own captures remain in `test/scratch/taste/shots/`, which is intentionally removed before submission; it is not a runtime dependency.
 

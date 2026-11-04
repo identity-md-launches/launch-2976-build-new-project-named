@@ -64,7 +64,7 @@ Spacing tokens follow a 4px basis: `--space-1/2/3/4/5/6/8/10/12` are **4/8/12/16
 | ≤65rem / 1040px | 24px gutters, 48px supporting-column gap, 400px scene, shorter footer |
 | ≤46rem / 736px | 16px gutters, stacked intro, 32px headline, 76px header, 360px scene, one supporting column; board appears before tips |
 | <40rem / 640px | Dialog becomes a bottom sheet with safe-area bottom padding |
-| ≤23rem / 368px | Header shortens Connect wallet to Connect; HUD spacing and menu type become more compact |
+| ≤23rem / 368px | Header shortens Connect wallet to Connect and wraps when the brand and wallet cannot fit; wallet aligns to the trailing edge with `margin-inline-start: auto`. HUD spacing and menu type become more compact |
 | Coarse pointer | Tap instruction replaces keyboard hints; an additional 48px Jump control appears while running |
 
 The HUD maintains 44px sound/pause targets at narrow widths. The brand link also has a 44px minimum height. Content wraps without horizontal scrolling in the checked 320/390/740/1440px layouts. The main game action is visible at 390 × 844. The text-enlargement check uses a 200% root text size at desktop width; native zoom and a complete RTL mirror were not performed.
@@ -89,12 +89,12 @@ The scene clips artwork intentionally; labels and controls are inset inside that
 | Icon / brand mark | `src/components/Icon.tsx` | `Icon` takes `name`, `size`, optional class/style; decorative SVGs are hidden from assistive technology. Icon-only actions provide their own accessible name. `MouseMark` identifies the brand. |
 | Game | `src/components/Game.tsx` | `best`, `sound`, `address`, callbacks, and a `GameHandle` with `start`/`pause`. Ready/running/paused/over states, DOM HUD, keyboard/touch input, persistent end-of-run announcement. |
 | Wallet control | `src/wallet/ConnectWallet.tsx` | One header entry point; discovered providers, mobile open-in rows, SDK connection, pending/rejection/retry, wrong-network switching, full address/copy, disconnect. Opening pauses gameplay. |
-| Leaderboard | `src/components/Leaderboard.tsx` | `runs` and `onStart`; local empty/populated table, separate unavailable Sepolia view, keyboard-operated tabs, full-address disclosure. No invented blockchain entries. |
+| Leaderboard | `src/components/Leaderboard.tsx` | `runs`, `onStart`, and `onOpen`; local empty/populated table, separate unavailable Sepolia view, keyboard-operated tabs, full-address disclosure. `onOpen` pauses an active run before showing a player address; closing leaves resume explicit. No invented blockchain entries. |
 | Modal | `src/components/Modal.tsx` | `title`, `children`, `onClose`, optional `className`. Native `showModal`, close button, Escape/backdrop close, Tab/Shift+Tab boundary cycling, and return to the opening control. Scrolls within viewport limits. |
 | Keyboard/help pattern | `Game`, `App`, `.control-rail`, `.help-keys` | Directions next to the play surface; detailed rules open a modal. Keyboard focus enters the canvas for Space/Up play without scrolling the page. |
 | Storage limitation | `src/App.tsx`, `.storage-warning` | Persistent plain explanation near the game when saving fails; gameplay and session scores continue. |
 
-Scores do not create continuous live-region chatter. Starting, pausing, resuming, and finishing update a stable polite status region. Sound is an action with a state-specific accessible name. Dialog focus and keyboard focus are visible in the recorded browser screenshots.
+Scores do not create continuous live-region chatter. Starting, pausing, resuming, and finishing update a stable polite status region. Sound is an action with a state-specific accessible name. Pointer activation of HUD sound/pause returns focus to the canvas without scrolling, keeping jump shortcuts available. Keyboard activation retains native button behavior; P/Escape also work while a HUD button has focus. Game shortcuts leave dialogs and editable fields alone. Dialog focus and keyboard focus are visible in the recorded browser screenshots.
 
 Interactive transitions name only their properties and last **150ms** with `cubic-bezier(0.2, 0, 0, 1)`. Press scale is **0.96**. They run only with no reduced-motion preference. The game itself starts only on request, pauses on blur/hidden documents, and freezes all simulation counters while paused. Reduced motion removes nonessential canvas parallax, floating cheese, collection particles, and button transforms; essential obstacles and jumping continue. There is no idle animation or autoplay soundtrack.
 

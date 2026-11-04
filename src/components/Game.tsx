@@ -159,8 +159,14 @@ export function Game({
       const target = event.target as HTMLElement;
       if (
         document.querySelector('dialog[open]') ||
-        target.closest(
-          'button, a, input, textarea, select, [contenteditable=true]',
+        target.closest('input, textarea, select, [contenteditable=true]')
+      )
+        return;
+      if (
+        target.closest('button, a') &&
+        !(
+          target.closest('.game-utilities') &&
+          (event.code === 'KeyP' || event.code === 'Escape')
         )
       )
         return;
@@ -245,12 +251,14 @@ export function Game({
               className="icon-button"
               aria-label={sound ? 'Turn sound off' : 'Turn sound on'}
               title={sound ? 'Sound on' : 'Sound off'}
-              onClick={() => {
+              onClick={(event) => {
                 if (audio.current) {
                   audio.current.enabled = !sound;
                   if (!sound) audio.current.unlock();
                 }
                 onSound();
+                if (event.detail > 0)
+                  canvasRef.current?.focus({ preventScroll: true });
               }}
             >
               <Icon name={sound ? 'sound' : 'muted'} />
@@ -265,9 +273,11 @@ export function Game({
               disabled={
                 snapshot.status === 'ready' || snapshot.status === 'over'
               }
-              onClick={() =>
-                snapshot.status === 'paused' ? resume() : pause()
-              }
+              onClick={(event) => {
+                snapshot.status === 'paused' ? resume() : pause();
+                if (event.detail > 0)
+                  canvasRef.current?.focus({ preventScroll: true });
+              }}
             >
               <Icon name={snapshot.status === 'paused' ? 'play' : 'pause'} />
             </button>

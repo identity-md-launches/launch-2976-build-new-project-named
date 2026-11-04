@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-04T17:24:15.982Z",
+  "checkedAt": "2026-11-04T17:44:00.338Z",
   "method": "Computed text foreground against actual canvas pixels sampled every 2 CSS px across each text box, or opaque control background. Ready state only; antialiasing excluded by WCAG calculation.",
   "results": [
     {
