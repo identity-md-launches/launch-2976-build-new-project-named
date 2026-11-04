@@ -1,0 +1,100 @@
+{
+  "checkedAt": "2026-11-04T17:22:10.803Z",
+  "target": "dist/ served at /preview/",
+  "results": [
+    {
+      "browser": "Chromium",
+      "name": "390px first screen, complete metadata, relative assets, and accessible ready state",
+      "passed": true,
+      "durationMs": 1435
+    },
+    {
+      "browser": "Chromium",
+      "name": "keyboard start and jump, no page scroll, pause freezes score, resume and restart",
+      "passed": true,
+      "durationMs": 784
+    },
+    {
+      "browser": "Chromium",
+      "name": "collision, game over, collected cheese, local leaderboard, persistence, and sound toggle",
+      "passed": true,
+      "durationMs": 3764
+    },
+    {
+      "browser": "Chromium",
+      "name": "touch scene and visible Jump control both jump",
+      "passed": true,
+      "durationMs": 1131
+    },
+    {
+      "browser": "Chromium",
+      "name": "help dialog pauses gameplay, traps keyboard focus, Escape closes and restores focus",
+      "passed": true,
+      "durationMs": 751
+    },
+    {
+      "browser": "Chromium",
+      "name": "leaderboard tabs reveal honest Sepolia state and support arrow keys",
+      "passed": true,
+      "durationMs": 67
+    },
+    {
+      "browser": "Chromium",
+      "name": "phone wallet sheet contains all four branded open-in paths and closes accessibly",
+      "passed": true,
+      "durationMs": 846
+    },
+    {
+      "browser": "Chromium",
+      "name": "320, 740, and 1440px reflow; reduced motion has no endless decorative animation",
+      "passed": true,
+      "durationMs": 258
+    },
+    {
+      "browser": "Chromium",
+      "name": "desktop ready layout and no-extension recovery",
+      "passed": true,
+      "durationMs": 468
+    },
+    {
+      "browser": "Chromium",
+      "name": "keyboard focus is visible and 200% text enlargement remains usable",
+      "passed": true,
+      "durationMs": 165
+    },
+    {
+      "browser": "Chromium (simulated providers)",
+      "name": "EIP-6963 lists MetaMask and Rabby separately; pending and rejected connection states recover",
+      "passed": true,
+      "durationMs": 388
+    },
+    {
+      "browser": "Chromium (simulated providers)",
+      "name": "wrong-network detection; Sepolia switch and unknown-chain add fallback use the correct chain",
+      "passed": true,
+      "durationMs": 949
+    },
+    {
+      "browser": "Chromium (simulated providers)",
+      "name": "connection survives reload, wallet address labels only a new local run, full address is reachable, disconnect works",
+      "passed": true,
+      "durationMs": 3019
+    },
+    {
+      "browser": "Chromium",
+      "name": "blocked browser storage still allows gameplay and gives an honest save limitation",
+      "passed": true,
+      "durationMs": 3011
+    }
+  ],
+  "unperformed": [
+    {
+      "browser": "WebKit",
+      "reason": "The browser runtime could not start because required system libraries are missing."
+    }
+  ],
+  "errors": [],
+  "failedResources": [],
+  "limitation": "Simulated wallet providers; no real wallet approvals, passkey creation, mobile app handoff, screen-reader session, or physical device test.",
+  "allExecutedChecksPassed": true
+}

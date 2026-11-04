@@ -1,0 +1,14 @@
+# Explicit path budget: this file < 1 KiB. No runtime assets or dist/ are ignored.
+**/node_modules/
+**/.vite/
+**/.vite-temp/
+**/.npm/
+**/.npm-cache/
+**/npm-cache/
+**/.cache/
+**/*.tsbuildinfo
+/test/scratch/
+/playwright-report/
+/test-results/
+!/artifacts/
+!/artifacts/**

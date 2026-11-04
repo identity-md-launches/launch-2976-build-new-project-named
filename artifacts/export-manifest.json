@@ -1,0 +1,70 @@
+{
+  "totalBytes": 598751,
+  "files": [
+    {
+      "path": "dist/assets/dist-DgXmVdVD.js",
+      "bytes": 102687,
+      "sha256": "2af2a41dfde4ec8d1cd149853d1e4bdf5364317c0990ebddce4bfa9d6d584671"
+    },
+    {
+      "path": "dist/assets/dm-sans-latin-wght-normal-Xz1IZZA0.woff2",
+      "bytes": 36932,
+      "sha256": "9fea608a947e67020c33cad9a6fe3d60c54119dfb8cff87768a8117a15ed7543"
+    },
+    {
+      "path": "dist/assets/index-DYYvkHaR.css",
+      "bytes": 20313,
+      "sha256": "5ac251cb41c9b2eb7795cffe84e7dd56d246ae98d7d18cbe83eaee44133f29a1"
+    },
+    {
+      "path": "dist/assets/index-DydUvLfv.js",
+      "bytes": 359078,
+      "sha256": "b89149395c8d386713dddfbaebaf7dcfbbf5fff52df93ef509db35e1025460c8"
+    },
+    {
+      "path": "dist/favicon.svg",
+      "bytes": 735,
+      "sha256": "1094884e2a12527c56c8d25456dd6cc8059bcbf68538d84e7ee5cec45a8b14fd"
+    },
+    {
+      "path": "dist/index.html",
+      "bytes": 1619,
+      "sha256": "3ea496dad761142163cdb41e5740565cf08c1ff379c00bd90599349d0386d339"
+    },
+    {
+      "path": "dist/licenses/DM-Sans-OFL.txt",
+      "bytes": 4502,
+      "sha256": "6fbd040a29c2037a765dfb9f2561e9965b5c95c6dcb5dce516089d63d5f17af7"
+    },
+    {
+      "path": "dist/licenses/RainbowKit-MIT.txt",
+      "bytes": 1064,
+      "sha256": "5095037afa1ba03be36e04305c01ec9ee600e14377738a026482b1a888c4e365"
+    },
+    {
+      "path": "dist/social.png",
+      "bytes": 66463,
+      "sha256": "6cbd40be38b1f8b3ab4475cc56f6045d88da6b63be2ac73e5ef3308394341a2c"
+    },
+    {
+      "path": "dist/wallets/coinbase.svg",
+      "bytes": 542,
+      "sha256": "ab2d64bdbb8f4ffdcbfdb04167f622d4ac64bbcade1a1bc937761478f1efa62f"
+    },
+    {
+      "path": "dist/wallets/metamask.svg",
+      "bytes": 1665,
+      "sha256": "892c7dfab8c4ca5682878dda3f42f55a75195d7d365e4adb0832845f3a0a2135"
+    },
+    {
+      "path": "dist/wallets/phantom.svg",
+      "bytes": 861,
+      "sha256": "f841f8112e131259a2e5123177950099c79487e61e77971f4e193e6c374419eb"
+    },
+    {
+      "path": "dist/wallets/rabby.svg",
+      "bytes": 2290,
+      "sha256": "dcae4de88ebfa10cffa1fe28df13d7c8c0b40736ef2b704f1f2fc348e777e443"
+    }
+  ]
+}

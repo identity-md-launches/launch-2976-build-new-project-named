@@ -1,0 +1,634 @@
+{
+  "checkedAt": "2026-11-04T17:24:15.982Z",
+  "method": "Computed text foreground against actual canvas pixels sampled every 2 CSS px across each text box, or opaque control background. Ready state only; antialiasing excluded by WCAG calculation.",
+  "results": [
+    {
+      "width": 320,
+      "contrasts": [
+        {
+          "text": "Score",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "0000",
+          "foreground": [
+            53,
+            60,
+            50
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 10,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "Local best",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "0000",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "Ready, little runner?",
+          "foreground": [
+            45,
+            52,
+            43
+          ],
+          "worstBackground": [
+            242,
+            238,
+            227
+          ],
+          "minimumRatio": 11.06,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "There’s cheese around the corner.",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            237,
+            222,
+            180
+          ],
+          "minimumRatio": 5.82,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "Start running",
+          "foreground": [
+            45,
+            52,
+            43
+          ],
+          "worstBackground": [
+            243,
+            204,
+            89
+          ],
+          "minimumRatio": 8.3,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "The pantry",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            231,
+            222,
+            205
+          ],
+          "minimumRatio": 5.82,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "00",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            231,
+            222,
+            205
+          ],
+          "minimumRatio": 5.82,
+          "threshold": 4.5,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "contrasts": [
+        {
+          "text": "Score",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "0000",
+          "foreground": [
+            53,
+            60,
+            50
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 10,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "Local best",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "0000",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "Ready, little runner?",
+          "foreground": [
+            45,
+            52,
+            43
+          ],
+          "worstBackground": [
+            233,
+            227,
+            207
+          ],
+          "minimumRatio": 9.99,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "There’s cheese around the corner.",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            236,
+            222,
+            180
+          ],
+          "minimumRatio": 5.8,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "Start running",
+          "foreground": [
+            45,
+            52,
+            43
+          ],
+          "worstBackground": [
+            243,
+            204,
+            89
+          ],
+          "minimumRatio": 8.3,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "The pantry",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            231,
+            222,
+            205
+          ],
+          "minimumRatio": 5.82,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "00",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            231,
+            222,
+            205
+          ],
+          "minimumRatio": 5.82,
+          "threshold": 4.5,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "width": 740,
+      "contrasts": [
+        {
+          "text": "Score",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "0000",
+          "foreground": [
+            53,
+            60,
+            50
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 10,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "Local best",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "0000",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "Ready, little runner?",
+          "foreground": [
+            45,
+            52,
+            43
+          ],
+          "worstBackground": [
+            230,
+            219,
+            203
+          ],
+          "minimumRatio": 9.38,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "There’s cheese around the corner.",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            212,
+            203,
+            181
+          ],
+          "minimumRatio": 4.82,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "Start running",
+          "foreground": [
+            45,
+            52,
+            43
+          ],
+          "worstBackground": [
+            243,
+            204,
+            89
+          ],
+          "minimumRatio": 8.3,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "No wallet needed. Just little paws.",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "The pantry",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            222,
+            212,
+            190
+          ],
+          "minimumRatio": 5.28,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "00",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            222,
+            212,
+            190
+          ],
+          "minimumRatio": 5.28,
+          "threshold": 4.5,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "contrasts": [
+        {
+          "text": "Score",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "0000",
+          "foreground": [
+            53,
+            60,
+            50
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 10,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "Local best",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "0000",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "Ready, little runner?",
+          "foreground": [
+            45,
+            52,
+            43
+          ],
+          "worstBackground": [
+            230,
+            219,
+            203
+          ],
+          "minimumRatio": 9.38,
+          "threshold": 3,
+          "passed": true
+        },
+        {
+          "text": "There’s cheese around the corner.",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            212,
+            203,
+            181
+          ],
+          "minimumRatio": 4.82,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "Start running",
+          "foreground": [
+            45,
+            52,
+            43
+          ],
+          "worstBackground": [
+            243,
+            204,
+            89
+          ],
+          "minimumRatio": 8.3,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "No wallet needed. Just little paws.",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            244,
+            240,
+            229
+          ],
+          "minimumRatio": 6.83,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "The pantry",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            216,
+            204,
+            180
+          ],
+          "minimumRatio": 4.89,
+          "threshold": 4.5,
+          "passed": true
+        },
+        {
+          "text": "00",
+          "foreground": [
+            80,
+            84,
+            71
+          ],
+          "worstBackground": [
+            216,
+            204,
+            180
+          ],
+          "minimumRatio": 4.89,
+          "threshold": 4.5,
+          "passed": true
+        }
+      ]
+    }
+  ]
+}
